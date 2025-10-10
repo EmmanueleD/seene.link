@@ -9,13 +9,14 @@
 
 ## 🎯 What is Seene.link?
 
-Seene.link is a minimalist web app that lets you instantly create and share beautiful text pages. Perfect for:
+Seene.link is a minimalist web app that lets you instantly create and share beautiful, customizable text pages. Perfect for:
 
 - 📝 Sharing quotes or thoughts
 - 🎤 Event slogans and presentations  
 - 💭 Mood pages
 - ✨ Micro-poetry
 - 🔗 Clean links for bios and chats
+- 🎨 Personalized messages with custom fonts and colors
 
 ## 🚀 Quick Start
 
@@ -58,6 +59,10 @@ Seene.link is a minimalist web app that lets you instantly create and share beau
    CREATE TABLE seenes (
      id TEXT PRIMARY KEY,
      text TEXT NOT NULL,
+     font TEXT DEFAULT 'Inter',
+     text_color TEXT DEFAULT '#111827',
+     gradient_start TEXT DEFAULT '#ffffff',
+     gradient_end TEXT DEFAULT '#f3f4f6',
      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
    );
    
@@ -134,7 +139,11 @@ Create a new Seene.
 **Request body:**
 ```json
 {
-  "text": "Your text here"
+  "text": "Your text here",
+  "font": "Inter",
+  "text_color": "#111827",
+  "gradient_start": "#ffffff",
+  "gradient_end": "#f3f4f6"
 }
 ```
 
@@ -154,6 +163,10 @@ Retrieve a Seene by ID.
 {
   "id": "abc12345",
   "text": "Your text here",
+  "font": "Inter",
+  "text_color": "#111827",
+  "gradient_start": "#ffffff",
+  "gradient_end": "#f3f4f6",
   "created_at": "2025-10-10T17:30:00Z"
 }
 ```
@@ -190,24 +203,34 @@ Retrieve a Seene by ID.
 
 See [ROADMAP.md](./ROADMAP.md) for detailed development plan.
 
-### ✅ MVP Completed (Phase 1-2)
-- [x] Project setup
-- [x] UI (Home + View pages)
+### ✅ Completed Features
+- [x] Project setup & deployment
+- [x] Beautiful WYSIWYG editor (What You See Is What You Get)
 - [x] API endpoints (/api/create, /api/get)
 - [x] Supabase integration
-- [x] End-to-end testing
-- [x] Production deployment
 - [x] Domain connected (seene.link)
-- [x] GitHub repository
+- [x] **Font customization** - 5 curated fonts + custom Google Fonts support
+- [x] **Color pickers** - Text color & gradient background
+- [x] **Click-to-toggle controls** - Clean, immersive UX
+- [x] **Live preview** - See changes in real-time
+- [x] **Auto-resize textarea** - Adapts to content
+- [x] **Line breaks preservation** - Formatting maintained
+- [x] **Responsive design** - Works on all devices
 - [x] Vercel Analytics integrated
 - [x] SEO meta tags (OpenGraph, Twitter Card)
-- [x] UX improvements (Create Another button, smooth animations)
 
-### 🔜 Coming Soon (Phase 3+)
-- [ ] Font customization (Google Fonts)
-- [ ] Color pickers (text + background)
+### 🎨 Customization Features
+- **5 Curated Fonts**: Inter, Playfair Display, Space Mono, Crimson Text, Roboto Mono
+- **Custom Google Fonts**: Load any font from Google Fonts library
+- **Text Color Picker**: Full color customization with hex preview
+- **Gradient Background**: Two-color gradient with visual preview
+- **Real-time Preview**: See exactly how your Seene will look
+
+### 🔜 Future Ideas
 - [ ] QR code generation
 - [ ] Public gallery
+- [ ] Rate limiting & bot protection
+- [ ] Analytics dashboard
 
 ## 🤝 Contributing
 
@@ -234,9 +257,10 @@ ISC
 ## 📊 Stats
 
 - **Released**: October 10, 2025
-- **Development time**: ~3 hours
-- **Tech stack**: Vue 3, Vite, Tailwind CSS v4, Vercel, Supabase, Vercel Analytics
-- **Lines of code**: ~650
+- **Development time**: ~6 hours
+- **Tech stack**: Vue 3, Vite, Tailwind CSS v4, Vercel, Supabase, Google Fonts API
+- **Lines of code**: ~1200
+- **Features**: Font customization, color pickers, WYSIWYG editor, custom fonts
 
 ---
 

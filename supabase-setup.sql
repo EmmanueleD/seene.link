@@ -5,10 +5,10 @@
 CREATE TABLE IF NOT EXISTS seenes (
   id TEXT PRIMARY KEY,
   text TEXT NOT NULL,
-  font VARCHAR(50),
-  text_color VARCHAR(7),
-  bg_color VARCHAR(7),
-  animation VARCHAR(50),
+  font TEXT DEFAULT 'Inter',
+  text_color TEXT DEFAULT '#111827',
+  gradient_start TEXT DEFAULT '#ffffff',
+  gradient_end TEXT DEFAULT '#f3f4f6',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
