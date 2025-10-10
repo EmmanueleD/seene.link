@@ -23,9 +23,13 @@
     </div>
 
     <!-- Content -->
-    <div v-else class="relative w-full h-screen flex items-center justify-center">
+    <div 
+      v-else 
+      class="relative w-full h-screen flex items-center justify-center cursor-pointer"
+      @click="toggleControls"
+    >
       <!-- Main Text -->
-      <div class="px-8 text-center">
+      <div class="px-8 text-center pointer-events-none">
         <p 
           class="text-3xl md:text-5xl lg:text-6xl font-light leading-relaxed whitespace-pre-wrap"
           :style="{ 
@@ -37,8 +41,12 @@
         </p>
       </div>
 
-      <!-- Hover Actions (Bottom Right) -->
-      <div class="fixed bottom-8 right-8 flex flex-col gap-2 opacity-0 hover:opacity-100 transition-opacity duration-300">
+      <!-- Actions (Bottom Right) -->
+      <div 
+        class="fixed bottom-8 right-8 flex flex-col gap-2 transition-all duration-300 pointer-events-auto"
+        :class="showControls ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'"
+        @click.stop
+      >
         <button
           @click="copyLink"
           class="px-4 py-2 bg-gray-900 text-white text-sm rounded-lg hover:bg-gray-800 transition-colors shadow-lg"
@@ -65,6 +73,11 @@ const isLoading = ref(true)
 const error = ref(false)
 const seene = ref(null)
 const copied = ref(false)
+const showControls = ref(false)
+
+const toggleControls = () => {
+  showControls.value = !showControls.value
+}
 
 const backgroundStyle = computed(() => {
   if (!seene.value) return {}
