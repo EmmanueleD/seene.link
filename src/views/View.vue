@@ -27,8 +27,11 @@
       <!-- Main Text -->
       <div class="px-8 text-center">
         <p 
-          class="text-3xl md:text-5xl lg:text-6xl font-light leading-relaxed text-gray-900"
-          :style="{ fontFamily: seene.font || 'Inter' }"
+          class="text-3xl md:text-5xl lg:text-6xl font-light leading-relaxed"
+          :style="{ 
+            fontFamily: seene.font || 'Inter',
+            color: seene.text_color || '#111827'
+          }"
         >
           {{ seene.text }}
         </p>

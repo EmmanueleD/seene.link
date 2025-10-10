@@ -36,6 +36,7 @@ export default async function handler(req, res) {
       id: data.id,
       text: data.text,
       font: data.font,
+      text_color: data.text_color,
       gradient_start: data.gradient_start,
       gradient_end: data.gradient_end,
       created_at: data.created_at

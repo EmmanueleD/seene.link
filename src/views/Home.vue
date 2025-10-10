@@ -16,7 +16,7 @@
             placeholder="Write something..."
             class="w-full h-48 px-6 py-4 text-lg border border-gray-200 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
             maxlength="500"
-            :style="{ fontFamily: selectedFont }"
+            :style="{ fontFamily: selectedFont, color: textColor }"
           ></textarea>
           <div class="text-right text-sm text-gray-400 mt-2">
             {{ text.length }} / 500
@@ -24,7 +24,7 @@
         </div>
 
         <!-- Customization Options -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="space-y-4">
           <!-- Font Selector -->
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Font</label>
@@ -40,22 +40,36 @@
             </select>
           </div>
 
-          <!-- Gradient Colors -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Background</label>
-            <div class="flex gap-2">
+          <!-- Colors Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Text Color -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
               <input
-                v-model="gradientStart"
+                v-model="textColor"
                 type="color"
-                class="w-1/2 h-10 border border-gray-200 rounded-lg cursor-pointer"
-                title="Start color"
+                class="w-full h-10 border border-gray-200 rounded-lg cursor-pointer"
+                title="Text color"
               />
-              <input
-                v-model="gradientEnd"
-                type="color"
-                class="w-1/2 h-10 border border-gray-200 rounded-lg cursor-pointer"
-                title="End color"
-              />
+            </div>
+
+            <!-- Background Gradient -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Background Gradient</label>
+              <div class="flex gap-2">
+                <input
+                  v-model="gradientStart"
+                  type="color"
+                  class="w-1/2 h-10 border border-gray-200 rounded-lg cursor-pointer"
+                  title="Start color"
+                />
+                <input
+                  v-model="gradientEnd"
+                  type="color"
+                  class="w-1/2 h-10 border border-gray-200 rounded-lg cursor-pointer"
+                  title="End color"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -114,6 +128,7 @@ const isCreating = ref(false)
 const createdUrl = ref('')
 const copied = ref(false)
 const selectedFont = ref('Inter')
+const textColor = ref('#111827')
 const gradientStart = ref('#ffffff')
 const gradientEnd = ref('#f3f4f6')
 
@@ -132,6 +147,7 @@ const createSeene = async () => {
       body: JSON.stringify({
         text: text.value.trim(),
         font: selectedFont.value,
+        text_color: textColor.value,
         gradient_start: gradientStart.value,
         gradient_end: gradientEnd.value
       })
@@ -169,6 +185,7 @@ const createAnother = () => {
   createdUrl.value = ''
   copied.value = false
   selectedFont.value = 'Inter'
+  textColor.value = '#111827'
   gradientStart.value = '#ffffff'
   gradientEnd.value = '#f3f4f6'
 }

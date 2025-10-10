@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { text, font, gradient_start, gradient_end } = req.body
+    const { text, font, text_color, gradient_start, gradient_end } = req.body
 
     // Validate input
     if (!text || typeof text !== 'string' || text.trim().length === 0) {
@@ -33,6 +33,7 @@ export default async function handler(req, res) {
       id,
       text: text.trim(),
       font: font || 'Inter',
+      text_color: text_color || '#111827',
       gradient_start: gradient_start || '#ffffff',
       gradient_end: gradient_end || '#f3f4f6'
     }
