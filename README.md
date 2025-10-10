@@ -199,13 +199,14 @@ See [ROADMAP.md](./ROADMAP.md) for detailed development plan.
 - [x] Production deployment
 - [x] Domain connected (seene.link)
 - [x] GitHub repository
+- [x] Vercel Analytics integrated
+- [x] SEO meta tags (OpenGraph, Twitter Card)
+- [x] UX improvements (Create Another button, smooth animations)
 
 ### 🔜 Coming Soon (Phase 3+)
 - [ ] Font customization (Google Fonts)
 - [ ] Color pickers (text + background)
 - [ ] QR code generation
-- [ ] Social preview (OpenGraph)
-- [ ] Analytics (Vercel/Plausible)
 - [ ] Public gallery
 
 ## 🤝 Contributing
@@ -233,9 +234,9 @@ ISC
 ## 📊 Stats
 
 - **Released**: October 10, 2025
-- **Development time**: ~2.5 hours
-- **Tech stack**: Vue 3, Vite, Tailwind CSS v4, Vercel, Supabase
-- **Lines of code**: ~600
+- **Development time**: ~3 hours
+- **Tech stack**: Vue 3, Vite, Tailwind CSS v4, Vercel, Supabase, Vercel Analytics
+- **Lines of code**: ~650
 
 ---
 

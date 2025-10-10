@@ -124,7 +124,7 @@ Implement the basic flow: create a Seene and display it.
 **Release date**: October 10, 2025  
 **URL**: https://seene.link  
 **Repository**: https://github.com/EmmanueleD/seene.link  
-**Development time**: ~2.5 hours  
+**Development time**: ~3 hours  
 **Status**: ✅ Live and in production
 
 ### Live Features
@@ -132,10 +132,14 @@ Implement the basic flow: create a Seene and display it.
 - ✅ Generate unique link with nanoid
 - ✅ Display Seene with minimalist design
 - ✅ Copy link with feedback
+- ✅ "Create Another" button for quick reset
+- ✅ Smooth fade-in animations
 - ✅ Persistent storage on Supabase
 - ✅ Responsive mobile and desktop
 - ✅ 404 error handling
 - ✅ Loading states
+- ✅ Vercel Analytics integrated
+- ✅ SEO optimized (OpenGraph, Twitter Card)
 
 ---
 
@@ -280,11 +284,11 @@ Optimize performance, add analytics, and launch publicly.
 ### Tasks
 
 #### Analytics
-- [ ] Install Vercel Analytics or Plausible
-- [ ] Track:
-  - Seenes created
-  - Views
-  - Shares
+- [x] Install Vercel Analytics ✅
+- [x] Track:
+  - Seenes created ✅
+  - Views ✅
+  - Page performance ✅
 
 #### Performance
 - [ ] Lighthouse audit (target: 95+ on all metrics)
