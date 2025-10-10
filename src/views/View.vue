@@ -27,7 +27,7 @@
       <!-- Main Text -->
       <div class="px-8 text-center">
         <p 
-          class="text-3xl md:text-5xl lg:text-6xl font-light leading-relaxed"
+          class="text-3xl md:text-5xl lg:text-6xl font-light leading-relaxed whitespace-pre-wrap"
           :style="{ 
             fontFamily: seene.font || 'Inter',
             color: seene.text_color || '#111827'
