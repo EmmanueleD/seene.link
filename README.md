@@ -1,8 +1,11 @@
-# Seene.link 🌐
+# Seene.link 🌍
 
 > Create and share personalized text pages with a single link. No login required.
 
-![Status](https://img.shields.io/badge/status-in%20development-yellow)
+![Status](https://img.shields.io/badge/status-live-brightgreen)
+![License](https://img.shields.io/badge/license-ISC-blue)
+
+**🎉 Live at [seene.link](https://seene.link)**
 
 ## 🎯 What is Seene.link?
 
@@ -27,7 +30,7 @@ Seene.link is a minimalist web app that lets you instantly create and share beau
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/seene.link.git
+   git clone https://github.com/EmmanueleD/seene.link.git
    cd seene.link
    ```
 
@@ -103,7 +106,8 @@ seene.link/
 ├── index.html             # HTML entry point
 ├── vercel.json            # Vercel configuration
 ├── vite.config.js         # Vite configuration
-├── tailwind.config.js     # Tailwind configuration
+├── postcss.config.js      # PostCSS configuration
+├── supabase-setup.sql     # Database schema
 └── ROADMAP.md             # Development roadmap
 ```
 
@@ -111,9 +115,16 @@ seene.link/
 
 ### Available Scripts
 
-- `npm run dev` - Start development server
+- `npm run dev` - Start development server (port 5173)
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build locally
+
+### Testing with Vercel Functions
+
+To test API endpoints locally:
+```bash
+vercel dev
+```
 
 ### API Endpoints
 
@@ -179,24 +190,35 @@ Retrieve a Seene by ID.
 
 See [ROADMAP.md](./ROADMAP.md) for detailed development plan.
 
-### Current Status: Phase 1-2 (MVP)
+### ✅ MVP Completed (Phase 1-2)
 - [x] Project setup
-- [x] Basic UI (Home + View pages)
-- [x] API endpoints structure
-- [ ] Supabase integration
-- [ ] End-to-end testing
-- [ ] Production deployment
+- [x] UI (Home + View pages)
+- [x] API endpoints (/api/create, /api/get)
+- [x] Supabase integration
+- [x] End-to-end testing
+- [x] Production deployment
+- [x] Domain connected (seene.link)
+- [x] GitHub repository
 
-### Coming Soon
-- [ ] Font customization
-- [ ] Color pickers
+### 🔜 Coming Soon (Phase 3+)
+- [ ] Font customization (Google Fonts)
+- [ ] Color pickers (text + background)
 - [ ] QR code generation
 - [ ] Social preview (OpenGraph)
+- [ ] Analytics (Vercel/Plausible)
 - [ ] Public gallery
 
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+### Local Development
+
+1. Clone the repo
+2. Install dependencies: `npm install`
+3. Copy `.env.example` to `.env` and add your Supabase credentials
+4. Run dev server: `npm run dev`
+5. Test API with: `vercel dev`
 
 ## 📄 License
 
@@ -204,8 +226,16 @@ ISC
 
 ## 🔗 Links
 
-- **Website**: [seene.link](https://seene.link) (coming soon)
-- **GitHub**: [github.com/yourusername/seene.link](https://github.com/yourusername/seene.link)
+- **Website**: [seene.link](https://seene.link) ✅ LIVE
+- **GitHub**: [github.com/EmmanueleD/seene.link](https://github.com/EmmanueleD/seene.link)
+- **Vercel**: [Dashboard](https://vercel.com/emmanueleds-projects/seene.link)
+
+## 📊 Stats
+
+- **Released**: October 10, 2025
+- **Development time**: ~2.5 hours
+- **Tech stack**: Vue 3, Vite, Tailwind CSS v4, Vercel, Supabase
+- **Lines of code**: ~600
 
 ---
 
