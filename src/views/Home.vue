@@ -74,14 +74,29 @@
               </svg>
             </a>
           </div>
-          <select v-model="selectedFont"
+          <select v-model="selectedFont" @change="onFontChange"
             class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white transition-all">
             <option value="Inter">Inter</option>
             <option value="Playfair Display">Playfair Display</option>
             <option value="Space Mono">Space Mono</option>
             <option value="Crimson Text">Crimson Text</option>
             <option value="Roboto Mono">Roboto Mono</option>
+            <option value="__custom__">Custom...</option>
           </select>
+          
+          <!-- Custom Font Input -->
+          <div v-if="showCustomFontInput" class="mt-3 space-y-2">
+            <input
+              v-model="customFontName"
+              type="text"
+              placeholder="Enter Google Font name (e.g. Lora)"
+              class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+              @input="loadCustomFont"
+            />
+            <p class="text-xs text-gray-500">
+              Find fonts at <a href="https://fonts.google.com" target="_blank" class="underline hover:text-gray-900">fonts.google.com</a>
+            </p>
+          </div>
         </div>
 
         <!-- Text Color -->
@@ -143,6 +158,8 @@ const isCreating = ref(false)
 const createdUrl = ref('')
 const copied = ref(false)
 const selectedFont = ref('Inter')
+const customFontName = ref('')
+const showCustomFontInput = ref(false)
 const textColor = ref('#111827')
 const gradientStart = ref('#ffffff')
 const gradientEnd = ref('#f3f4f6')
@@ -152,6 +169,40 @@ const textareaRef = ref(null)
 // Toggle controls visibility
 const toggleControls = () => {
   showControls.value = !showControls.value
+}
+
+// Handle font change
+const onFontChange = () => {
+  if (selectedFont.value === '__custom__') {
+    showCustomFontInput.value = true
+  } else {
+    showCustomFontInput.value = false
+    customFontName.value = ''
+  }
+}
+
+// Load custom Google Font dynamically
+const loadCustomFont = () => {
+  if (!customFontName.value.trim()) return
+  
+  const fontName = customFontName.value.trim()
+  const fontId = `custom-font-${fontName.replace(/\s+/g, '-')}`
+  
+  // Remove existing custom font link if any
+  const existingLink = document.getElementById(fontId)
+  if (existingLink) {
+    existingLink.remove()
+  }
+  
+  // Create new link element for Google Font
+  const link = document.createElement('link')
+  link.id = fontId
+  link.rel = 'stylesheet'
+  link.href = `https://fonts.googleapis.com/css2?family=${fontName.replace(/\s+/g, '+')}:wght@300;400;500&display=swap`
+  document.head.appendChild(link)
+  
+  // Update selected font to use custom font
+  selectedFont.value = fontName
 }
 
 // Helper function to get contrast color for text
@@ -243,6 +294,8 @@ const createAnother = () => {
   createdUrl.value = ''
   copied.value = false
   selectedFont.value = 'Inter'
+  customFontName.value = ''
+  showCustomFontInput.value = false
   textColor.value = '#111827'
   gradientStart.value = '#ffffff'
   gradientEnd.value = '#f3f4f6'
