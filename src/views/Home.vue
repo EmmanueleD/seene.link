@@ -16,9 +16,47 @@
             placeholder="Write something..."
             class="w-full h-48 px-6 py-4 text-lg border border-gray-200 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
             maxlength="500"
+            :style="{ fontFamily: selectedFont }"
           ></textarea>
           <div class="text-right text-sm text-gray-400 mt-2">
             {{ text.length }} / 500
+          </div>
+        </div>
+
+        <!-- Customization Options -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Font Selector -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Font</label>
+            <select
+              v-model="selectedFont"
+              class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+            >
+              <option value="Inter">Inter (Default)</option>
+              <option value="Playfair Display">Playfair Display</option>
+              <option value="Space Mono">Space Mono</option>
+              <option value="Crimson Text">Crimson Text</option>
+              <option value="Roboto Mono">Roboto Mono</option>
+            </select>
+          </div>
+
+          <!-- Gradient Colors -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Background</label>
+            <div class="flex gap-2">
+              <input
+                v-model="gradientStart"
+                type="color"
+                class="w-1/2 h-10 border border-gray-200 rounded-lg cursor-pointer"
+                title="Start color"
+              />
+              <input
+                v-model="gradientEnd"
+                type="color"
+                class="w-1/2 h-10 border border-gray-200 rounded-lg cursor-pointer"
+                title="End color"
+              />
+            </div>
           </div>
         </div>
 
@@ -75,6 +113,9 @@ const text = ref('')
 const isCreating = ref(false)
 const createdUrl = ref('')
 const copied = ref(false)
+const selectedFont = ref('Inter')
+const gradientStart = ref('#ffffff')
+const gradientEnd = ref('#f3f4f6')
 
 const createSeene = async () => {
   if (!text.value.trim()) return
@@ -89,7 +130,10 @@ const createSeene = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        text: text.value.trim()
+        text: text.value.trim(),
+        font: selectedFont.value,
+        gradient_start: gradientStart.value,
+        gradient_end: gradientEnd.value
       })
     })
 
@@ -124,5 +168,8 @@ const createAnother = () => {
   text.value = ''
   createdUrl.value = ''
   copied.value = false
+  selectedFont.value = 'Inter'
+  gradientStart.value = '#ffffff'
+  gradientEnd.value = '#f3f4f6'
 }
 </script>

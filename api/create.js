@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { text } = req.body
+    const { text, font, gradient_start, gradient_end } = req.body
 
     // Validate input
     if (!text || typeof text !== 'string' || text.trim().length === 0) {
@@ -28,15 +28,19 @@ export default async function handler(req, res) {
     // Generate unique ID
     const id = nanoid(8)
 
+    // Prepare data object
+    const seeneData = {
+      id,
+      text: text.trim(),
+      font: font || 'Inter',
+      gradient_start: gradient_start || '#ffffff',
+      gradient_end: gradient_end || '#f3f4f6'
+    }
+
     // Insert into database
     const { data, error } = await supabase
       .from('seenes')
-      .insert([
-        {
-          id,
-          text: text.trim(),
-        }
-      ])
+      .insert([seeneData])
       .select()
       .single()
 
