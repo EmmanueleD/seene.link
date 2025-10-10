@@ -1,48 +1,29 @@
 <template>
-  <div 
-    class="relative min-h-screen flex items-center justify-center px-4 transition-all duration-300"
-    :style="backgroundStyle"
-  >
+  <div class="relative min-h-screen flex items-center justify-center px-4 transition-all duration-300"
+    :style="backgroundStyle">
     <!-- Main Editable Text (Center) -->
     <div class="w-full max-w-5xl px-8 text-center">
-      <textarea
-        v-model="text"
-        placeholder="Click to start writing..."
-        class="w-full bg-transparent border-none outline-none resize-none text-center text-3xl md:text-5xl lg:text-6xl font-light leading-relaxed transition-all overflow-hidden"
-        :style="{ 
+      <textarea v-model="text" placeholder="Click to start writing..."
+        class="w-full bg-transparent border-none outline-none resize-none text-center text-3xl md:text-5xl lg:text-6xl font-light leading-relaxed transition-all"
+        :style="{
           fontFamily: selectedFont,
           color: textColor,
-          height: 'auto',
-          minHeight: '60vh',
-          maxHeight: '80vh'
-        }"
-        maxlength="500"
-        @focus="showControls = true"
-        @input="autoResize"
-        ref="textareaRef"
-      ></textarea>
-      
+          overflow: 'hidden'
+        }" maxlength="500" @focus="showControls = true" @input="autoResize" ref="textareaRef"></textarea>
+
       <!-- Character Count (subtle) -->
-      <div 
-        v-if="text.length > 0"
-        class="text-sm mt-4 transition-opacity"
-        :style="{ color: textColor, opacity: 0.5 }"
-      >
+      <div v-if="text.length > 0" class="text-sm mt-4 transition-opacity" :style="{ color: textColor, opacity: 0.5 }">
         {{ text.length }} / 500
       </div>
     </div>
 
     <!-- Controls Panel (Bottom Right - Hover) -->
-    <div 
+    <div
       class="fixed bottom-8 right-8 bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 space-y-5 w-80 transition-all duration-300 border border-gray-100"
-      :class="showControls || createdUrl ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'"
-    >
+      :class="showControls || createdUrl ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'">
       <!-- Close Button -->
-      <button
-        v-if="!createdUrl"
-        @click="showControls = false"
-        class="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors"
-      >
+      <button v-if="!createdUrl" @click="showControls = false"
+        class="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
@@ -52,30 +33,20 @@
       <div v-if="createdUrl" class="space-y-4">
         <p class="text-sm text-gray-600 font-medium">Your Seene is ready!</p>
         <div class="flex gap-2">
-          <input
-            :value="createdUrl"
-            readonly
-            class="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded text-xs"
-          />
-          <button
-            @click="copyLink"
-            class="px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-800 transition-colors text-xs"
-          >
+          <input :value="createdUrl" readonly
+            class="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded text-xs" />
+          <button @click="copyLink"
+            class="px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-800 transition-colors text-xs">
             {{ copied ? '✓' : 'Copy' }}
           </button>
         </div>
         <div class="flex gap-2">
-          <a
-            :href="createdUrl"
-            target="_blank"
-            class="flex-1 text-center py-2 text-xs text-gray-600 hover:text-gray-900 transition-colors"
-          >
+          <a :href="createdUrl" target="_blank"
+            class="flex-1 text-center py-2 text-xs text-gray-600 hover:text-gray-900 transition-colors">
             View →
           </a>
-          <button
-            @click="createAnother"
-            class="px-4 py-2 border border-gray-300 text-gray-700 rounded hover:border-gray-900 transition-colors text-xs"
-          >
+          <button @click="createAnother"
+            class="px-4 py-2 border border-gray-300 text-gray-700 rounded hover:border-gray-900 transition-colors text-xs">
             New Seene
           </button>
         </div>
@@ -86,10 +57,8 @@
         <!-- Font Selector -->
         <div>
           <label class="block text-xs font-semibold text-gray-700 mb-2.5">Font</label>
-          <select
-            v-model="selectedFont"
-            class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white transition-all"
-          >
+          <select v-model="selectedFont"
+            class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white transition-all">
             <option value="Inter">Inter</option>
             <option value="Playfair Display">Playfair Display</option>
             <option value="Space Mono">Space Mono</option>
@@ -102,20 +71,17 @@
         <div>
           <label class="block text-xs font-semibold text-gray-700 mb-2.5">Text Color</label>
           <div class="relative">
-            <input
-              v-model="textColor"
-              type="color"
-              class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-            />
-            <div 
+            <input v-model="textColor" type="color" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+            <div
               class="w-full h-12 rounded-xl border-2 border-gray-200 transition-all hover:border-gray-300 cursor-pointer flex items-center justify-between px-4"
-              :style="{ backgroundColor: textColor }"
-            >
+              :style="{ backgroundColor: textColor }">
               <span class="text-xs font-mono font-medium" :style="{ color: getContrastColor(textColor) }">
                 {{ textColor }}
               </span>
-              <svg class="w-4 h-4" :style="{ color: getContrastColor(textColor) }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+              <svg class="w-4 h-4" :style="{ color: getContrastColor(textColor) }" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
               </svg>
             </div>
           </div>
@@ -126,36 +92,25 @@
           <label class="block text-xs font-semibold text-gray-700 mb-2.5">Background Gradient</label>
           <div class="flex gap-3">
             <div class="flex-1 relative">
-              <input
-                v-model="gradientStart"
-                type="color"
-                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              />
-              <div 
+              <input v-model="gradientStart" type="color"
+                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+              <div
                 class="w-full h-12 rounded-xl border-2 border-gray-200 transition-all hover:border-gray-300 cursor-pointer"
-                :style="{ backgroundColor: gradientStart }"
-              ></div>
+                :style="{ backgroundColor: gradientStart }"></div>
             </div>
             <div class="flex-1 relative">
-              <input
-                v-model="gradientEnd"
-                type="color"
-                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              />
-              <div 
+              <input v-model="gradientEnd" type="color"
+                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+              <div
                 class="w-full h-12 rounded-xl border-2 border-gray-200 transition-all hover:border-gray-300 cursor-pointer"
-                :style="{ backgroundColor: gradientEnd }"
-              ></div>
+                :style="{ backgroundColor: gradientEnd }"></div>
             </div>
           </div>
         </div>
 
         <!-- Create Button -->
-        <button
-          @click="createSeene"
-          :disabled="!text.trim() || isCreating"
-          class="w-full py-3.5 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all text-sm shadow-lg hover:shadow-xl"
-        >
+        <button @click="createSeene" :disabled="!text.trim() || isCreating"
+          class="w-full py-3.5 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all text-sm shadow-lg hover:shadow-xl">
           {{ isCreating ? 'Creating...' : 'Create Seene' }}
         </button>
       </div>
@@ -166,7 +121,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 
-const text = ref('Write something beautiful.\n\nChange the font, colors, and style.\n\nThen click "Create Seene" to share it.')
+const text = ref('Write something beautiful.\n\nChange the font, colors, and style.\n\n Share your Seene!')
 const isCreating = ref(false)
 const createdUrl = ref('')
 const copied = ref(false)
@@ -190,7 +145,8 @@ const getContrastColor = (hexColor) => {
 const autoResize = () => {
   if (textareaRef.value) {
     textareaRef.value.style.height = 'auto'
-    textareaRef.value.style.height = textareaRef.value.scrollHeight + 'px'
+    const newHeight = Math.min(textareaRef.value.scrollHeight, window.innerHeight * 0.8)
+    textareaRef.value.style.height = newHeight + 'px'
   }
 }
 
@@ -201,6 +157,9 @@ const backgroundStyle = computed(() => {
 })
 
 onMounted(() => {
+  // Set initial height
+  autoResize()
+  
   // Show controls after 2 seconds to guide the user
   setTimeout(() => {
     if (!createdUrl.value) {
@@ -213,7 +172,7 @@ const createSeene = async () => {
   if (!text.value.trim()) return
 
   isCreating.value = true
-  
+
   try {
     // Call API to create Seene
     const response = await fetch('/api/create', {
@@ -236,7 +195,7 @@ const createSeene = async () => {
 
     const data = await response.json()
     createdUrl.value = data.url
-    
+
   } catch (error) {
     console.error('Error creating Seene:', error)
     alert('Failed to create Seene. Please try again.')
@@ -258,7 +217,7 @@ const copyLink = async () => {
 }
 
 const createAnother = () => {
-  text.value = 'Write something beautiful.\n\nChange the font, colors, and style.\n\nThen click "Create Seene" to share it.'
+  text.value = 'Write something beautiful.\n\nChange the font, colors, and style.\n\n Share your Seene!'
   createdUrl.value = ''
   copied.value = false
   selectedFont.value = 'Inter'
@@ -267,6 +226,7 @@ const createAnother = () => {
   gradientEnd.value = '#f3f4f6'
   showControls.value = false
   setTimeout(() => {
+    autoResize()
     showControls.value = true
   }, 500)
 }
