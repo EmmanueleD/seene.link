@@ -32,7 +32,7 @@
         </button>
 
         <!-- Success Message -->
-        <div v-if="createdUrl" class="p-6 bg-gray-50 rounded-lg space-y-4">
+        <div v-if="createdUrl" class="p-6 bg-gray-50 rounded-lg space-y-4 animate-fade-in">
           <p class="text-sm text-gray-600">Your Seene is ready!</p>
           <div class="flex gap-2">
             <input
@@ -47,13 +47,21 @@
               {{ copied ? 'Copied!' : 'Copy' }}
             </button>
           </div>
-          <a
-            :href="createdUrl"
-            target="_blank"
-            class="block text-center text-sm text-gray-600 hover:text-gray-900 transition-colors"
-          >
-            View your Seene →
-          </a>
+          <div class="flex gap-2">
+            <a
+              :href="createdUrl"
+              target="_blank"
+              class="flex-1 text-center py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              View your Seene →
+            </a>
+            <button
+              @click="createAnother"
+              class="px-6 py-2 border border-gray-300 text-gray-700 rounded hover:border-gray-900 hover:text-gray-900 transition-colors text-sm"
+            >
+              Create Another
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -110,5 +118,11 @@ const copyLink = async () => {
   } catch (error) {
     console.error('Failed to copy:', error)
   }
+}
+
+const createAnother = () => {
+  text.value = ''
+  createdUrl.value = ''
+  copied.value = false
 }
 </script>
