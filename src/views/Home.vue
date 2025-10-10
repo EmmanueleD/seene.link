@@ -1,9 +1,6 @@
 <template>
-  <div 
-    class="relative min-h-screen flex items-center justify-center px-4 transition-all duration-300 cursor-pointer"
-    :style="backgroundStyle"
-    @click="toggleControls"
-  >
+  <div class="relative min-h-screen flex items-center justify-center px-4 transition-all duration-300 cursor-pointer"
+    :style="backgroundStyle" @click="toggleControls">
     <!-- Main Editable Text (Center) -->
     <div class="w-full max-w-5xl px-8 text-center">
       <textarea v-model="text" placeholder="Click to start writing..."
@@ -24,8 +21,7 @@
     <div
       class="fixed bottom-8 right-8 bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 space-y-5 w-80 transition-all duration-300 border border-gray-100"
       :class="showControls || createdUrl ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'"
-      @click.stop
-    >
+      @click.stop>
       <!-- Close Button -->
       <button v-if="!createdUrl" @click="showControls = false"
         class="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors">
@@ -63,16 +59,6 @@
         <div>
           <div class="flex items-center justify-between mb-2.5">
             <label class="block text-xs font-semibold text-gray-700">Font</label>
-            <a 
-              href="https://fonts.google.com" 
-              target="_blank" 
-              class="text-xs text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1"
-            >
-              Browse more
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
           </div>
           <select v-model="selectedFont" @change="onFontChange"
             class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white transition-all">
@@ -83,18 +69,15 @@
             <option value="Roboto Mono">Roboto Mono</option>
             <option value="__custom__">Custom...</option>
           </select>
-          
+
           <!-- Custom Font Input -->
           <div v-if="showCustomFontInput" class="mt-3 space-y-2">
-            <input
-              v-model="customFontName"
-              type="text"
-              placeholder="Enter Google Font name (e.g. Lora)"
+            <input v-model="customFontName" type="text" placeholder="Enter Google Font name (e.g. Lora)"
               class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-              @input="loadCustomFont"
-            />
+              @input="loadCustomFont" />
             <p class="text-xs text-gray-500">
-              Find fonts at <a href="https://fonts.google.com" target="_blank" class="underline hover:text-gray-900">fonts.google.com</a>
+              Find fonts at <a href="https://fonts.google.com" target="_blank"
+                class="underline hover:text-gray-900">fonts.google.com</a>
             </p>
           </div>
         </div>
@@ -184,23 +167,23 @@ const onFontChange = () => {
 // Load custom Google Font dynamically
 const loadCustomFont = () => {
   if (!customFontName.value.trim()) return
-  
+
   const fontName = customFontName.value.trim()
   const fontId = `custom-font-${fontName.replace(/\s+/g, '-')}`
-  
+
   // Remove existing custom font link if any
   const existingLink = document.getElementById(fontId)
   if (existingLink) {
     existingLink.remove()
   }
-  
+
   // Create new link element for Google Font
   const link = document.createElement('link')
   link.id = fontId
   link.rel = 'stylesheet'
   link.href = `https://fonts.googleapis.com/css2?family=${fontName.replace(/\s+/g, '+')}:wght@300;400;500&display=swap`
   document.head.appendChild(link)
-  
+
   // Update selected font to use custom font
   selectedFont.value = fontName
 }
@@ -232,7 +215,7 @@ const backgroundStyle = computed(() => {
 onMounted(() => {
   // Set initial height
   autoResize()
-  
+
   // Show controls after 2 seconds to guide the user
   setTimeout(() => {
     if (!createdUrl.value) {
