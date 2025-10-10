@@ -55,62 +55,26 @@
       <!-- Customization Options -->
       <div v-else class="space-y-5">
         <!-- Font Selector -->
-        <div>
-          <label class="block text-xs font-semibold text-gray-700 mb-2.5">Font</label>
-          <select v-model="selectedFont"
-            class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white transition-all">
-            <option value="Inter">Inter</option>
-            <option value="Playfair Display">Playfair Display</option>
-            <option value="Space Mono">Space Mono</option>
-            <option value="Crimson Text">Crimson Text</option>
-            <option value="Roboto Mono">Roboto Mono</option>
-          </select>
-        </div>
+        <FontSelector v-model="selectedFont" />
 
         <!-- Text Color -->
-        <div>
-          <label class="block text-xs font-semibold text-gray-700 mb-2.5">Text Color</label>
-          <div class="relative">
-            <input v-model="textColor" type="color" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-            <div
-              class="w-full h-12 rounded-xl border-2 border-gray-200 transition-all hover:border-gray-300 cursor-pointer flex items-center justify-between px-4"
-              :style="{ backgroundColor: textColor }">
-              <span class="text-xs font-mono font-medium" :style="{ color: getContrastColor(textColor) }">
-                {{ textColor }}
-              </span>
-              <svg class="w-4 h-4" :style="{ color: getContrastColor(textColor) }" fill="none" stroke="currentColor"
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-              </svg>
-            </div>
-          </div>
-        </div>
+        <ColorPicker 
+          v-model="textColor" 
+          label="Text Color"
+          :preset-colors="['#000000', '#FFFFFF', '#111827', '#6B7280', '#EF4444', '#F59E0B', '#10B981', '#3B82F6', '#8B5CF6', '#EC4899', '#F3F4F6', '#1F2937']"
+        />
 
         <!-- Background Gradient -->
-        <div>
-          <label class="block text-xs font-semibold text-gray-700 mb-2.5">Background Gradient</label>
-          <div class="flex gap-3">
-            <div class="flex-1 relative">
-              <input v-model="gradientStart" type="color"
-                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-              <div
-                class="w-full h-12 rounded-xl border-2 border-gray-200 transition-all hover:border-gray-300 cursor-pointer"
-                :style="{ backgroundColor: gradientStart }"></div>
-            </div>
-            <div class="flex-1 relative">
-              <input v-model="gradientEnd" type="color"
-                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-              <div
-                class="w-full h-12 rounded-xl border-2 border-gray-200 transition-all hover:border-gray-300 cursor-pointer"
-                :style="{ backgroundColor: gradientEnd }"></div>
-            </div>
-          </div>
-        </div>
+        <GradientPicker 
+          :start-color="gradientStart"
+          :end-color="gradientEnd"
+          @update:start-color="gradientStart = $event"
+          @update:end-color="gradientEnd = $event"
+        />
 
         <!-- Create Button -->
         <button @click="createSeene" :disabled="!text.trim() || isCreating"
-          class="w-full py-3.5 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all text-sm shadow-lg hover:shadow-xl">
+          class="w-full py-3.5 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all text-sm shadow-lg hover:shadow-xl active:scale-95">
           {{ isCreating ? 'Creating...' : 'Create Seene' }}
         </button>
       </div>
@@ -120,6 +84,9 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import FontSelector from '../components/FontSelector.vue'
+import ColorPicker from '../components/ColorPicker.vue'
+import GradientPicker from '../components/GradientPicker.vue'
 
 const text = ref('Write something beautiful.\n\nChange the font, colors, and style.\n\n Share your Seene!')
 const isCreating = ref(false)
@@ -131,15 +98,6 @@ const gradientStart = ref('#ffffff')
 const gradientEnd = ref('#f3f4f6')
 const showControls = ref(false)
 const textareaRef = ref(null)
-
-// Helper function to get contrast color for text
-const getContrastColor = (hexColor) => {
-  const r = parseInt(hexColor.slice(1, 3), 16)
-  const g = parseInt(hexColor.slice(3, 5), 16)
-  const b = parseInt(hexColor.slice(5, 7), 16)
-  const brightness = (r * 299 + g * 587 + b * 114) / 1000
-  return brightness > 128 ? '#000000' : '#FFFFFF'
-}
 
 // Auto-resize textarea
 const autoResize = () => {
