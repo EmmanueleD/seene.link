@@ -35,6 +35,9 @@ export default async function handler(req, res) {
     return res.status(200).json({
       id: data.id,
       text: data.text,
+      font: data.font,
+      gradient_start: data.gradient_start,
+      gradient_end: data.gradient_end,
       created_at: data.created_at
     })
 
