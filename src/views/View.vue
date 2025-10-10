@@ -100,6 +100,25 @@ const copyLink = async () => {
   }
 }
 
+// Load custom Google Font if needed
+const loadCustomFont = (fontName) => {
+  // Check if it's one of the default fonts (already loaded)
+  const defaultFonts = ['Inter', 'Playfair Display', 'Space Mono', 'Crimson Text', 'Roboto Mono']
+  if (defaultFonts.includes(fontName)) return
+  
+  const fontId = `custom-font-${fontName.replace(/\s+/g, '-')}`
+  
+  // Check if font is already loaded
+  if (document.getElementById(fontId)) return
+  
+  // Create new link element for Google Font
+  const link = document.createElement('link')
+  link.id = fontId
+  link.rel = 'stylesheet'
+  link.href = `https://fonts.googleapis.com/css2?family=${fontName.replace(/\s+/g, '+')}:wght@300;400;500&display=swap`
+  document.head.appendChild(link)
+}
+
 onMounted(async () => {
   const id = route.params.id
   
@@ -110,6 +129,11 @@ onMounted(async () => {
     if (response.ok) {
       const data = await response.json()
       seene.value = data
+      
+      // Load custom font if needed
+      if (data.font) {
+        loadCustomFont(data.font)
+      }
     } else {
       error.value = true
     }
