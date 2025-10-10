@@ -4,18 +4,22 @@
     :style="backgroundStyle"
   >
     <!-- Main Editable Text (Center) -->
-    <div class="w-full max-w-4xl px-8 text-center">
+    <div class="w-full max-w-5xl px-8 text-center">
       <textarea
         v-model="text"
         placeholder="Click to start writing..."
-        class="w-full bg-transparent border-none outline-none resize-none text-center text-3xl md:text-5xl lg:text-6xl font-light leading-relaxed transition-all"
+        class="w-full bg-transparent border-none outline-none resize-none text-center text-3xl md:text-5xl lg:text-6xl font-light leading-relaxed transition-all overflow-hidden"
         :style="{ 
           fontFamily: selectedFont,
           color: textColor,
-          minHeight: '200px'
+          height: 'auto',
+          minHeight: '60vh',
+          maxHeight: '80vh'
         }"
         maxlength="500"
         @focus="showControls = true"
+        @input="autoResize"
+        ref="textareaRef"
       ></textarea>
       
       <!-- Character Count (subtle) -->
@@ -30,16 +34,18 @@
 
     <!-- Controls Panel (Bottom Right - Hover) -->
     <div 
-      class="fixed bottom-8 right-8 bg-white rounded-lg shadow-2xl p-6 space-y-4 w-80 transition-opacity duration-300"
-      :class="showControls || createdUrl ? 'opacity-100' : 'opacity-0 pointer-events-none'"
+      class="fixed bottom-8 right-8 bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 space-y-5 w-80 transition-all duration-300 border border-gray-100"
+      :class="showControls || createdUrl ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'"
     >
       <!-- Close Button -->
       <button
         v-if="!createdUrl"
         @click="showControls = false"
-        class="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-xl"
+        class="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors"
       >
-        ×
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
       </button>
 
       <!-- Success Message -->
@@ -76,13 +82,13 @@
       </div>
 
       <!-- Customization Options -->
-      <div v-else class="space-y-4">
+      <div v-else class="space-y-5">
         <!-- Font Selector -->
         <div>
-          <label class="block text-xs font-medium text-gray-700 mb-2">Font</label>
+          <label class="block text-xs font-semibold text-gray-700 mb-2.5">Font</label>
           <select
             v-model="selectedFont"
-            class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+            class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white transition-all"
           >
             <option value="Inter">Inter</option>
             <option value="Playfair Display">Playfair Display</option>
@@ -94,28 +100,53 @@
 
         <!-- Text Color -->
         <div>
-          <label class="block text-xs font-medium text-gray-700 mb-2">Text Color</label>
-          <input
-            v-model="textColor"
-            type="color"
-            class="w-full h-10 border border-gray-200 rounded-lg cursor-pointer"
-          />
+          <label class="block text-xs font-semibold text-gray-700 mb-2.5">Text Color</label>
+          <div class="relative">
+            <input
+              v-model="textColor"
+              type="color"
+              class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            />
+            <div 
+              class="w-full h-12 rounded-xl border-2 border-gray-200 transition-all hover:border-gray-300 cursor-pointer flex items-center justify-between px-4"
+              :style="{ backgroundColor: textColor }"
+            >
+              <span class="text-xs font-mono font-medium" :style="{ color: getContrastColor(textColor) }">
+                {{ textColor }}
+              </span>
+              <svg class="w-4 h-4" :style="{ color: getContrastColor(textColor) }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         <!-- Background Gradient -->
         <div>
-          <label class="block text-xs font-medium text-gray-700 mb-2">Background</label>
-          <div class="flex gap-2">
-            <input
-              v-model="gradientStart"
-              type="color"
-              class="w-1/2 h-10 border border-gray-200 rounded-lg cursor-pointer"
-            />
-            <input
-              v-model="gradientEnd"
-              type="color"
-              class="w-1/2 h-10 border border-gray-200 rounded-lg cursor-pointer"
-            />
+          <label class="block text-xs font-semibold text-gray-700 mb-2.5">Background Gradient</label>
+          <div class="flex gap-3">
+            <div class="flex-1 relative">
+              <input
+                v-model="gradientStart"
+                type="color"
+                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              />
+              <div 
+                class="w-full h-12 rounded-xl border-2 border-gray-200 transition-all hover:border-gray-300 cursor-pointer"
+                :style="{ backgroundColor: gradientStart }"
+              ></div>
+            </div>
+            <div class="flex-1 relative">
+              <input
+                v-model="gradientEnd"
+                type="color"
+                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              />
+              <div 
+                class="w-full h-12 rounded-xl border-2 border-gray-200 transition-all hover:border-gray-300 cursor-pointer"
+                :style="{ backgroundColor: gradientEnd }"
+              ></div>
+            </div>
           </div>
         </div>
 
@@ -123,7 +154,7 @@
         <button
           @click="createSeene"
           :disabled="!text.trim() || isCreating"
-          class="w-full py-3 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors text-sm"
+          class="w-full py-3.5 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all text-sm shadow-lg hover:shadow-xl"
         >
           {{ isCreating ? 'Creating...' : 'Create Seene' }}
         </button>
@@ -144,6 +175,24 @@ const textColor = ref('#111827')
 const gradientStart = ref('#ffffff')
 const gradientEnd = ref('#f3f4f6')
 const showControls = ref(false)
+const textareaRef = ref(null)
+
+// Helper function to get contrast color for text
+const getContrastColor = (hexColor) => {
+  const r = parseInt(hexColor.slice(1, 3), 16)
+  const g = parseInt(hexColor.slice(3, 5), 16)
+  const b = parseInt(hexColor.slice(5, 7), 16)
+  const brightness = (r * 299 + g * 587 + b * 114) / 1000
+  return brightness > 128 ? '#000000' : '#FFFFFF'
+}
+
+// Auto-resize textarea
+const autoResize = () => {
+  if (textareaRef.value) {
+    textareaRef.value.style.height = 'auto'
+    textareaRef.value.style.height = textareaRef.value.scrollHeight + 'px'
+  }
+}
 
 const backgroundStyle = computed(() => {
   return {
