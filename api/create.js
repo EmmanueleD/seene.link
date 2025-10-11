@@ -32,7 +32,7 @@ export default async function handler(req, res) {
     const seeneData = {
       id,
       text: text.trim(),
-      font: font || 'Inter',
+      font: font || 'Judson',
       text_color: text_color || '#111827',
       gradient_start: gradient_start || '#ffffff',
       gradient_end: gradient_end || '#f3f4f6'

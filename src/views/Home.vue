@@ -62,6 +62,7 @@
           </div>
           <select v-model="selectedFont" @change="onFontChange"
             class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white transition-all">
+            <option value="Judson">Judson</option>
             <option value="Inter">Inter</option>
             <option value="Playfair Display">Playfair Display</option>
             <option value="Space Mono">Space Mono</option>
@@ -140,7 +141,7 @@ const text = ref('Write something beautiful.\n\nChange the font, colors, and sty
 const isCreating = ref(false)
 const createdUrl = ref('')
 const copied = ref(false)
-const selectedFont = ref('Inter')
+const selectedFont = ref('Judson')
 const customFontName = ref('')
 const showCustomFontInput = ref(false)
 const textColor = ref('#111827')
@@ -276,7 +277,7 @@ const createAnother = () => {
   text.value = 'Write something beautiful.\n\nChange the font, colors, and style.\n\n Share your Seene!'
   createdUrl.value = ''
   copied.value = false
-  selectedFont.value = 'Inter'
+  selectedFont.value = 'Judson'
   customFontName.value = ''
   showCustomFontInput.value = false
   textColor.value = '#111827'

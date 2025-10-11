@@ -33,7 +33,7 @@
         <p 
           class="text-3xl md:text-5xl lg:text-6xl font-light leading-relaxed whitespace-pre-wrap"
           :style="{ 
-            fontFamily: seene.font || 'Inter',
+            fontFamily: seene.font || 'Judson',
             color: seene.text_color || '#111827'
           }"
         >
@@ -103,7 +103,7 @@ const copyLink = async () => {
 // Load custom Google Font if needed
 const loadCustomFont = (fontName) => {
   // Check if it's one of the default fonts (already loaded)
-  const defaultFonts = ['Inter', 'Playfair Display', 'Space Mono', 'Crimson Text', 'Roboto Mono']
+  const defaultFonts = ['Judson', 'Inter', 'Playfair Display', 'Space Mono', 'Crimson Text', 'Roboto Mono']
   if (defaultFonts.includes(fontName)) return
   
   const fontId = `custom-font-${fontName.replace(/\s+/g, '-')}`
