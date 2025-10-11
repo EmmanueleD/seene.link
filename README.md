@@ -1,9 +1,13 @@
-# Seene.link 🌍
-
-> Create and share personalized text pages with a single link. No login required.
-
-![Status](https://img.shields.io/badge/status-live-brightgreen)
-![License](https://img.shields.io/badge/license-ISC-blue)
+<div align="center">
+  <img src="public/logo.png" alt="Seene.link Logo" width="200">
+  
+  # Seene.link
+  
+  > Create and share personalized text pages with a single link. No login required.
+  
+  ![Status](https://img.shields.io/badge/status-live-brightgreen)
+  ![License](https://img.shields.io/badge/license-ISC-blue)
+</div>
 
 **🎉 Live at [seene.link](https://seene.link)**
 

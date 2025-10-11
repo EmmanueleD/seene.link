@@ -1,7 +1,11 @@
-# Seene.link — Development Roadmap
+<div align="center">
+  <img src="public/logo.png" alt="Seene.link Logo" width="150">
+  
+  # Seene.link — Development Roadmap
+</div>
 
-> **Project**: Micro web app to create and share personalized text pages
-> **Stack**: Vue 3 + Vite + Tailwind + Vercel + Supabase
+> **Project**: Micro web app to create and share personalized text pages  
+> **Stack**: Vue 3 + Vite + Tailwind + Vercel + Supabase  
 > **Started**: October 10, 2025
 
 ---
