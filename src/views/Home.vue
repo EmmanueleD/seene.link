@@ -4,6 +4,7 @@
     <!-- Main Editable Text (Center) -->
     <div class="w-full max-w-5xl px-8 text-center">
       <textarea v-model="text" placeholder="Click to start writing..."
+        aria-label="Enter your text to create a Seene"
         class="w-full bg-transparent border-none outline-none resize-none text-center text-3xl md:text-5xl lg:text-6xl font-light leading-relaxed transition-all cursor-text"
         :style="{
           fontFamily: selectedFont,
@@ -34,10 +35,12 @@
       <div v-if="createdUrl" class="space-y-4">
         <p class="text-sm text-gray-600 font-medium">Your Seene is ready!</p>
         <div class="flex gap-2">
-          <input :value="createdUrl" readonly
-            class="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded text-xs" />
+          <input type="color" v-model="textColor"
+            aria-label="Select text color"
+            class="w-16 h-10 rounded-lg cursor-pointer border-2 border-gray-200">
           <button @click="copyLink"
-            class="px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-800 transition-colors text-xs">
+            :aria-label="copied ? 'Link copied' : 'Copy link to clipboard'"
+            class="w-full bg-gray-100 text-gray-900 py-3 rounded-xl font-medium hover:bg-gray-200 transition-all">
             {{ copied ? '✓' : 'Copy' }}
           </button>
         </div>
@@ -61,6 +64,7 @@
             <label class="block text-xs font-semibold text-gray-700">Font</label>
           </div>
           <select v-model="selectedFont" @change="onFontChange"
+            aria-label="Select font"
             class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white transition-all">
             <option value="Judson">Judson</option>
             <option value="Inter">Inter</option>
@@ -73,9 +77,14 @@
 
           <!-- Custom Font Input -->
           <div v-if="showCustomFontInput" class="mt-3 space-y-2">
-            <input v-model="customFontName" type="text" placeholder="Enter Google Font name (e.g. Lora)"
+            <input
+              v-model="customFontName"
+              type="text"
+              placeholder="Enter Google Font name (e.g. Lora)"
+              aria-label="Enter custom Google Font name"
               class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-              @input="loadCustomFont" />
+              @input="loadCustomFont"
+            />
             <p class="text-xs text-gray-500">
               Find fonts at <a href="https://fonts.google.com" target="_blank"
                 class="underline hover:text-gray-900">fonts.google.com</a>
@@ -108,15 +117,17 @@
           <label class="block text-xs font-semibold text-gray-700 mb-2.5">Background Gradient</label>
           <div class="flex gap-3">
             <div class="flex-1 relative">
-              <input v-model="gradientStart" type="color"
-                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+              <input type="color" v-model="gradientStart"
+                aria-label="Select gradient start color"
+                class="w-16 h-10 rounded-lg cursor-pointer border-2 border-gray-200">
               <div
                 class="w-full h-12 rounded-xl border-2 border-gray-200 transition-all hover:border-gray-300 cursor-pointer"
                 :style="{ backgroundColor: gradientStart }"></div>
             </div>
             <div class="flex-1 relative">
-              <input v-model="gradientEnd" type="color"
-                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+              <input type="color" v-model="gradientEnd"
+                aria-label="Select gradient end color"
+                class="w-16 h-10 rounded-lg cursor-pointer border-2 border-gray-200">
               <div
                 class="w-full h-12 rounded-xl border-2 border-gray-200 transition-all hover:border-gray-300 cursor-pointer"
                 :style="{ backgroundColor: gradientEnd }"></div>
@@ -126,7 +137,8 @@
 
         <!-- Create Button -->
         <button @click="createSeene" :disabled="!text.trim() || isCreating"
-          class="w-full py-3.5 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all text-sm shadow-lg hover:shadow-xl">
+          aria-label="Create Seene"
+          class="w-full bg-gray-900 text-white py-3.5 rounded-xl font-medium hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl">
           {{ isCreating ? 'Creating...' : 'Create Seene' }}
         </button>
       </div>

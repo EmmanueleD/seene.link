@@ -49,16 +49,18 @@
       >
         <button
           @click="copyLink"
-          class="px-4 py-2 bg-gray-900 text-white text-sm rounded-lg hover:bg-gray-800 transition-colors shadow-lg"
+          :aria-label="copied ? 'Link copied' : 'Copy link to clipboard'"
+          class="bg-white/95 backdrop-blur-sm text-gray-900 px-6 py-3 rounded-xl font-medium hover:bg-white transition-all shadow-lg hover:shadow-xl border border-gray-100"
         >
-          {{ copied ? 'Copied!' : 'Copy Link' }}
+          {{ copied ? '✓ Copied!' : 'Copy Link' }}
         </button>
-        <router-link
-          to="/"
-          class="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm rounded-lg hover:border-gray-900 hover:text-gray-900 transition-colors text-center shadow-lg"
+        <a
+          href="/"
+          aria-label="Create your own Seene"
+          class="bg-gray-900 text-white px-6 py-3 rounded-xl font-medium hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl"
         >
           Create Your Own
-        </router-link>
+        </a>
       </div>
     </div>
   </div>
