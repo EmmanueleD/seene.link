@@ -1,10 +1,13 @@
 <template>
-  <div class="relative min-h-screen flex items-center justify-center px-4 transition-all duration-300 cursor-pointer"
-    :style="backgroundStyle" @click="toggleControls">
+  <div class="relative min-h-screen flex items-center justify-center px-4 transition-all duration-300"
+    :class="createdUrl ? 'cursor-default' : 'cursor-pointer'"
+    :style="backgroundStyle" @click="createdUrl ? null : toggleControls">
     <!-- Main Editable Text (Center) -->
     <div class="w-full max-w-5xl px-8 text-center">
       <textarea v-model="text" placeholder="Click to start writing..."
-        class="w-full bg-transparent border-none outline-none resize-none text-center text-3xl md:text-5xl lg:text-6xl font-light leading-relaxed transition-all cursor-text"
+        :disabled="!!createdUrl"
+        class="w-full bg-transparent border-none outline-none resize-none text-center text-3xl md:text-5xl lg:text-6xl font-light leading-relaxed transition-all"
+        :class="!!createdUrl ? 'cursor-default pointer-events-none' : 'cursor-text'"
         :style="{
           fontFamily: selectedFont,
           color: textColor,

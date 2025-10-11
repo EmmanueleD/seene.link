@@ -156,6 +156,7 @@ Implement the basic flow: create a Seene and display it.
 - ✅ **Auto-Resize Textarea** - Adapts to content dynamically
 - ✅ **Line Breaks Preservation** - Formatting maintained in view
 - ✅ **Elegant Color Pickers** - Visual preview with contrast-aware text
+- ✅ **Locked Editing After Creation** - Prevents accidental modifications after Seene is created
 
 ---
 
@@ -184,6 +185,7 @@ Add customization options for fonts, colors, and style.
   - [x] Real-time preview while typing
   - [x] Click-to-toggle controls panel
   - [x] Auto-resize textarea
+  - [x] Locked editing after Seene creation
 
 #### Backend
 - [x] Updated `/api/create` to accept: ✅
@@ -370,3 +372,10 @@ Ideas for future iterations:
 
 **Last updated**: October 11, 2025
 **Status**: MVP + Customization completed and live at https://seene.link
+
+---
+
+## 📝 Recent Updates
+
+### October 11, 2025 - UX Improvement
+- ✅ **Fixed editing lock after creation**: When a Seene is created and the success popup appears, the textarea is now properly disabled to prevent accidental modifications. Users can only copy the link, view the Seene, or create a new one.
