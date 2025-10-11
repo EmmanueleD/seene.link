@@ -59,7 +59,7 @@ Seene.link is a minimalist web app that lets you instantly create and share beau
    CREATE TABLE seenes (
      id TEXT PRIMARY KEY,
      text TEXT NOT NULL,
-     font TEXT DEFAULT 'Inter',
+     font TEXT DEFAULT 'Judson',
      text_color TEXT DEFAULT '#111827',
      gradient_start TEXT DEFAULT '#ffffff',
      gradient_end TEXT DEFAULT '#f3f4f6',
@@ -140,7 +140,7 @@ Create a new Seene.
 ```json
 {
   "text": "Your text here",
-  "font": "Inter",
+  "font": "Judson",
   "text_color": "#111827",
   "gradient_start": "#ffffff",
   "gradient_end": "#f3f4f6"
@@ -163,7 +163,7 @@ Retrieve a Seene by ID.
 {
   "id": "abc12345",
   "text": "Your text here",
-  "font": "Inter",
+  "font": "Judson",
   "text_color": "#111827",
   "gradient_start": "#ffffff",
   "gradient_end": "#f3f4f6",
@@ -220,7 +220,7 @@ See [ROADMAP.md](./ROADMAP.md) for detailed development plan.
 - [x] SEO meta tags (OpenGraph, Twitter Card)
 
 ### 🎨 Customization Features
-- **5 Curated Fonts**: Inter, Playfair Display, Space Mono, Crimson Text, Roboto Mono
+- **6 Curated Fonts**: Judson (default), Inter, Playfair Display, Space Mono, Crimson Text, Roboto Mono
 - **Custom Google Fonts**: Load any font from Google Fonts library
 - **Text Color Picker**: Full color customization with hex preview
 - **Gradient Background**: Two-color gradient with visual preview

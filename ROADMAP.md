@@ -143,7 +143,7 @@ Implement the basic flow: create a Seene and display it.
 
 ### Customization Features (Phase 3 ✅)
 - ✅ **WYSIWYG Editor** - What You See Is What You Get
-- ✅ **5 Curated Fonts** - Inter, Playfair Display, Space Mono, Crimson Text, Roboto Mono
+- ✅ **6 Curated Fonts** - Judson (default), Inter, Playfair Display, Space Mono, Crimson Text, Roboto Mono
 - ✅ **Custom Google Fonts** - Load any font from Google Fonts library
 - ✅ **Text Color Picker** - Full color customization with hex preview
 - ✅ **Gradient Background** - Two-color gradient with visual preview
@@ -165,7 +165,7 @@ Add customization options for fonts, colors, and style.
 #### Frontend
 - [x] **Font selector** ✅
   - [x] Integrated Google Fonts API
-  - [x] 5 curated fonts (Inter, Playfair Display, Space Mono, Crimson Text, Roboto Mono)
+  - [x] 6 curated fonts (Judson as default, Inter, Playfair Display, Space Mono, Crimson Text, Roboto Mono)
   - [x] Custom font input for any Google Font
   - [x] Live preview
 
@@ -186,7 +186,7 @@ Add customization options for fonts, colors, and style.
   ```json
   {
     "text": "...",
-    "font": "Inter",
+    "font": "Judson",
     "text_color": "#111827",
     "gradient_start": "#ffffff",
     "gradient_end": "#f3f4f6"
@@ -195,7 +195,7 @@ Add customization options for fonts, colors, and style.
 
 - [x] Updated database schema: ✅
   ```sql
-  ALTER TABLE seenes ADD COLUMN font TEXT DEFAULT 'Inter';
+  ALTER TABLE seenes ADD COLUMN font TEXT DEFAULT 'Judson';
   ALTER TABLE seenes ADD COLUMN text_color TEXT DEFAULT '#111827';
   ALTER TABLE seenes ADD COLUMN gradient_start TEXT DEFAULT '#ffffff';
   ALTER TABLE seenes ADD COLUMN gradient_end TEXT DEFAULT '#f3f4f6';
@@ -271,9 +271,10 @@ Create visual identity and compelling landing page.
 ### Tasks
 
 #### Branding
-- [x] Minimalist logo (already done ✅)
-- [ ] Favicon
-- [ ] Main color scheme
+- [x] Minimalist logo ✅
+- [x] Favicon (multi-size, iOS, Android) ✅
+- [x] PWA manifest ✅
+- [x] Main color scheme ✅
 
 #### Landing Page
 - [ ] **Hero section**

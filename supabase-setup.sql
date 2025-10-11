@@ -5,7 +5,7 @@
 CREATE TABLE IF NOT EXISTS seenes (
   id TEXT PRIMARY KEY,
   text TEXT NOT NULL,
-  font TEXT DEFAULT 'Inter',
+  font TEXT DEFAULT 'Judson',
   text_color TEXT DEFAULT '#111827',
   gradient_start TEXT DEFAULT '#ffffff',
   gradient_end TEXT DEFAULT '#f3f4f6',
