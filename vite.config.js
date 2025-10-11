@@ -7,24 +7,5 @@ export default defineConfig({
     alias: {
       '@': '/src'
     }
-  },
-  build: {
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
-      }
-    },
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'vue-vendor': ['vue', 'vue-router'],
-          'supabase-vendor': ['@supabase/supabase-js']
-        }
-      }
-    },
-    cssMinify: true,
-    reportCompressedSize: false
   }
 })

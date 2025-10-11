@@ -323,18 +323,10 @@ Optimize performance, add analytics, and launch publicly.
   - Page performance ✅
 
 #### Performance
-- [x] Lighthouse audit ✅
-  - [x] Performance: 72 (improved from 58)
-  - [x] Accessibility: 70
-  - [x] Best Practices: 96
-  - [x] SEO: 91
-- [x] Optimize bundle size ✅
-  - [x] Code splitting (vue-vendor, supabase-vendor)
-  - [x] Terser minification
-  - [x] CSS minification
-- [x] Lazy load Google Fonts ✅
-- [ ] Implement caching (Vercel Edge) - Future
-- [ ] Lazy loading components - Future
+- [ ] Lighthouse audit (target: 95+ on all metrics)
+- [ ] Implement caching (Vercel Edge)
+- [ ] Optimize bundle size
+- [ ] Lazy loading components
 
 #### Testing
 - [ ] Cross-browser testing (Chrome, Firefox, Safari, Edge)
