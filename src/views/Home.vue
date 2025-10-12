@@ -1,9 +1,7 @@
 <template>
   <div class="relative min-h-screen flex items-center justify-center px-4 transition-all duration-300"
     :class="createdUrl ? 'cursor-default' : 'cursor-pointer'"
-    :style="backgroundStyle" 
-    @click="createdUrl ? null : toggleControls"
-    @touchend.prevent="createdUrl ? null : toggleControls">
+    :style="backgroundStyle" @click="handleBackgroundClick" @touchend="handleBackgroundTouch">
     <!-- Main Editable Text (Center) -->
     <div class="w-full max-w-5xl px-8 text-center">
       <textarea v-model="text" placeholder="Click to start writing..."
@@ -28,7 +26,7 @@
       :class="showControls || createdUrl ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'"
       @click.stop>
       <!-- Close Button -->
-      <button v-if="!createdUrl" @click="showControls = false"
+      <button v-if="!createdUrl" @click.stop="closeControls" @touchend.stop="closeControls"
         class="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -154,10 +152,31 @@ const gradientStart = ref('#ffffff')
 const gradientEnd = ref('#f3f4f6')
 const showControls = ref(false)
 const textareaRef = ref(null)
+const lastInteraction = ref(0)
 
-// Toggle controls visibility
-const toggleControls = () => {
+// Handle background click (desktop)
+const handleBackgroundClick = (e) => {
+  if (createdUrl.value) return
+  const now = Date.now()
+  // Prevent double-firing from touch devices that also fire click
+  if (now - lastInteraction.value < 500) return
+  lastInteraction.value = now
   showControls.value = !showControls.value
+}
+
+// Handle background touch (mobile)
+const handleBackgroundTouch = (e) => {
+  if (createdUrl.value) return
+  e.preventDefault()
+  const now = Date.now()
+  lastInteraction.value = now
+  showControls.value = !showControls.value
+}
+
+// Close controls
+const closeControls = (e) => {
+  e.preventDefault()
+  showControls.value = false
 }
 
 // Handle font change
