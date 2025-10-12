@@ -26,8 +26,8 @@
     <div 
       v-else 
       class="relative w-full min-h-screen flex items-center justify-center cursor-pointer py-20"
-      @click="toggleControls"
-      @touchstart="toggleControls"
+      @click="handleToggle"
+      @touchstart="handleTouchToggle"
     >
       <!-- Main Text -->
       <div class="px-8 text-center pointer-events-none">
@@ -76,8 +76,24 @@ const seene = ref(null)
 const copied = ref(false)
 const showControls = ref(false)
 
+let touchHandled = false
+
 const toggleControls = () => {
   showControls.value = !showControls.value
+}
+
+const handleTouchToggle = (e) => {
+  touchHandled = true
+  toggleControls()
+  setTimeout(() => {
+    touchHandled = false
+  }, 500)
+}
+
+const handleToggle = () => {
+  if (!touchHandled) {
+    toggleControls()
+  }
 }
 
 const backgroundStyle = computed(() => {

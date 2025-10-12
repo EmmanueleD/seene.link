@@ -2,8 +2,8 @@
   <div class="relative min-h-screen flex items-center justify-center px-4 transition-all duration-300"
     :class="createdUrl ? 'cursor-default' : 'cursor-pointer'"
     :style="backgroundStyle" 
-    @click="createdUrl ? null : toggleControls"
-    @touchstart="createdUrl ? null : toggleControls">
+    @click="createdUrl ? null : handleToggle"
+    @touchstart="createdUrl ? null : handleTouchToggle">
     <!-- Main Editable Text (Center) -->
     <div class="w-full max-w-5xl px-8 text-center">
       <textarea v-model="text" placeholder="Click to start writing..."
@@ -155,9 +155,25 @@ const gradientEnd = ref('#f3f4f6')
 const showControls = ref(false)
 const textareaRef = ref(null)
 
+let touchHandled = false
+
 // Toggle controls visibility
 const toggleControls = () => {
   showControls.value = !showControls.value
+}
+
+const handleTouchToggle = (e) => {
+  touchHandled = true
+  toggleControls()
+  setTimeout(() => {
+    touchHandled = false
+  }, 500)
+}
+
+const handleToggle = () => {
+  if (!touchHandled) {
+    toggleControls()
+  }
 }
 
 // Handle font change
