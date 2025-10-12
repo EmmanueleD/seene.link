@@ -27,7 +27,6 @@
       v-else 
       class="relative w-full min-h-screen flex items-center justify-center cursor-pointer py-20"
       @click="toggleControls"
-      @touchend.prevent="toggleControls"
     >
       <!-- Main Text -->
       <div class="px-8 text-center pointer-events-none">
