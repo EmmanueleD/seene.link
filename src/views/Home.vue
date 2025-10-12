@@ -1,7 +1,9 @@
 <template>
   <div class="relative min-h-screen flex items-center justify-center px-4 transition-all duration-300"
     :class="createdUrl ? 'cursor-default' : 'cursor-pointer'"
-    :style="backgroundStyle" @click="createdUrl ? null : toggleControls">
+    :style="backgroundStyle" 
+    @click="createdUrl ? null : toggleControls"
+    @touchstart="createdUrl ? null : toggleControls">
     <!-- Main Editable Text (Center) -->
     <div class="w-full max-w-5xl px-8 text-center">
       <textarea v-model="text" placeholder="Click to start writing..."
