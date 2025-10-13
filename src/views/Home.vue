@@ -12,7 +12,7 @@
           fontFamily: selectedFont,
           color: textColor,
           overflow: 'hidden'
-        }" maxlength="500" @input="autoResize" @click.stop ref="textareaRef"></textarea>
+        }" maxlength="500" @input="autoResize" @click.stop @touchend.stop ref="textareaRef"></textarea>
 
       <!-- Character Count (subtle) -->
       <div v-if="text.length > 0" class="text-sm mt-4 transition-opacity" :style="{ color: textColor, opacity: 0.5 }">
@@ -167,7 +167,6 @@ const handleBackgroundClick = (e) => {
 // Handle background touch (mobile)
 const handleBackgroundTouch = (e) => {
   if (createdUrl.value) return
-  e.preventDefault()
   const now = Date.now()
   lastInteraction.value = now
   showControls.value = !showControls.value
