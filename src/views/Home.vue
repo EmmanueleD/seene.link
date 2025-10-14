@@ -2,12 +2,6 @@
   <div class="relative min-h-screen flex items-center justify-center px-4 transition-all duration-300"
     :class="createdUrl ? 'cursor-default' : 'cursor-pointer'"
     :style="backgroundStyle" @click="handleBackgroundClick" @touchend="handleBackgroundTouch">
-    
-    <!-- Branch Badge (Top Left) -->
-    <div class="fixed top-8 left-8 bg-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
-      og-preview
-    </div>
-    
     <!-- Main Editable Text (Center) -->
     <div class="w-full max-w-5xl px-8 text-center">
       <textarea v-model="text" placeholder="Click to start writing..."
