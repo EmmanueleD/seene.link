@@ -1,8 +1,4 @@
 import { ImageResponse } from '@vercel/og'
-import { createClient } from '@supabase/supabase-js'
-
-const supabaseUrl = process.env.VITE_SUPABASE_URL
-const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY
 
 export const config = {
   runtime: 'edge',
@@ -17,15 +13,28 @@ export default async function handler(request) {
       return new Response('Missing ID', { status: 400 })
     }
 
-    // Get Seene data from Supabase
-    const supabase = createClient(supabaseUrl, supabaseKey)
-    const { data: seene, error } = await supabase
-      .from('seenes')
-      .select('*')
-      .eq('id', id)
-      .single()
+    // Get Seene data from Supabase using REST API
+    const supabaseUrl = process.env.VITE_SUPABASE_URL
+    const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY
+    
+    const response = await fetch(
+      `${supabaseUrl}/rest/v1/seenes?id=eq.${id}&select=*`,
+      {
+        headers: {
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
+        },
+      }
+    )
 
-    if (error || !seene) {
+    if (!response.ok) {
+      return new Response('Error fetching Seene', { status: 500 })
+    }
+
+    const data = await response.json()
+    const seene = data[0]
+
+    if (!seene) {
       return new Response('Seene not found', { status: 404 })
     }
 
