@@ -1,3 +1,6 @@
+import { readFileSync } from 'fs'
+import { join } from 'path'
+
 export default async function handler(req, res) {
   try {
     const { id } = req.query
@@ -35,14 +38,13 @@ export default async function handler(req, res) {
     const ogImageUrl = `https://seene.link/api/og/${id}?id=${id}`
     const title = seene.text.substring(0, 60) + (seene.text.length > 60 ? '...' : '')
     const description = seene.text.substring(0, 160) + (seene.text.length > 160 ? '...' : '')
-
-    // Return HTML with meta tags
-    const html = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    // Read the index.html from dist folder
+    const indexPath = join(process.cwd(), 'dist', 'index.html')
+    let html = readFileSync(indexPath, 'utf-8')
+    
+    // Inject meta tags into the HTML
+    const metaTags = `
   <title>${title}</title>
   
   <!-- Open Graph / Facebook -->
@@ -58,16 +60,10 @@ export default async function handler(req, res) {
   <meta name="twitter:title" content="${title}">
   <meta name="twitter:description" content="${description}">
   <meta name="twitter:image" content="${ogImageUrl}">
-  
-  <!-- Redirect to actual page -->
-  <meta http-equiv="refresh" content="0;url=/${id}">
-  <script>window.location.href = '/${id}';</script>
-</head>
-<body>
-  <p>Redirecting...</p>
-</body>
-</html>
-    `
+`
+    
+    // Insert meta tags before </head>
+    html = html.replace('</head>', `${metaTags}</head>`)
 
     res.setHeader('Content-Type', 'text/html')
     res.status(200).send(html)
