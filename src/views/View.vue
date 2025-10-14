@@ -119,26 +119,27 @@ const loadCustomFont = (fontName) => {
   document.head.appendChild(link)
 }
 
-// Update meta tags for Open Graph
-const updateMetaTags = (seeneData) => {
+// Update meta tags for OG preview
+const updateMetaTags = (seeneData, id) => {
   const url = window.location.href
-  const ogImageUrl = `${window.location.origin}/api/og/${route.params.id}?id=${route.params.id}`
-  const title = seeneData.text.substring(0, 60) + (seeneData.text.length > 60 ? '...' : '')
-  const description = seeneData.text.substring(0, 160) + (seeneData.text.length > 160 ? '...' : '')
-  
+  const ogImageUrl = `${window.location.origin}/api/og/${id}?id=${id}`
+  const description = seeneData.text.length > 200 
+    ? seeneData.text.substring(0, 200) + '...' 
+    : seeneData.text
+
   // Update or create meta tags
   const metaTags = [
-    { property: 'og:title', content: title },
+    { property: 'og:title', content: 'Seene' },
     { property: 'og:description', content: description },
     { property: 'og:image', content: ogImageUrl },
     { property: 'og:url', content: url },
     { property: 'og:type', content: 'website' },
     { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:title', content: title },
+    { name: 'twitter:title', content: 'Seene' },
     { name: 'twitter:description', content: description },
     { name: 'twitter:image', content: ogImageUrl },
   ]
-  
+
   metaTags.forEach(({ property, name, content }) => {
     const selector = property ? `meta[property="${property}"]` : `meta[name="${name}"]`
     let meta = document.querySelector(selector)
@@ -152,9 +153,9 @@ const updateMetaTags = (seeneData) => {
     
     meta.setAttribute('content', content)
   })
-  
+
   // Update page title
-  document.title = title
+  document.title = 'Seene'
 }
 
 onMounted(async () => {
@@ -169,7 +170,7 @@ onMounted(async () => {
       seene.value = data
       
       // Update meta tags for social sharing
-      updateMetaTags(data)
+      updateMetaTags(data, id)
       
       // Load custom font if needed
       if (data.font) {
