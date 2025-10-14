@@ -4,7 +4,7 @@
     :style="backgroundStyle" @click="handleBackgroundClick" @touchend="handleBackgroundTouch">
     
     <!-- Branch Badge (Top Left) -->
-    <div class="fixed top-8 left-8 bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
+    <div class="fixed top-8 left-8 bg-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
       og-preview
     </div>
     
