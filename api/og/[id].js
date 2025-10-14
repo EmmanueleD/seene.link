@@ -1,10 +1,6 @@
+/** @jsxImportSource react */
 import { ImageResponse } from '@vercel/og'
-import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(
-  process.env.VITE_SUPABASE_URL,
-  process.env.VITE_SUPABASE_ANON_KEY
-)
+import React from 'react'
 
 export const config = {
   runtime: 'edge',
@@ -12,23 +8,23 @@ export const config = {
 
 export default async function handler(request) {
   try {
-    const { searchParams } = new URL(request.url)
-    const id = searchParams.get('id')
+    const { pathname } = new URL(request.url)
+    const id = pathname.split('/').pop()
 
     if (!id) {
       return new Response('Missing id parameter', { status: 400 })
     }
 
-    // Fetch Seene data from Supabase
-    const { data: seene, error } = await supabase
-      .from('seenes')
-      .select('*')
-      .eq('id', id)
-      .single()
-
-    if (error || !seene) {
+    // Fetch Seene data from API
+    const apiUrl = `${request.url.split('/api/og')[0]}/api/get?id=${id}`
+    const response = await fetch(apiUrl)
+    
+    if (!response.ok) {
       return new Response('Seene not found', { status: 404 })
     }
+
+    const seene = await response.json()
+    const displayText = seene.text.length > 200 ? seene.text.substring(0, 200) + '...' : seene.text
 
     // Generate OG image with the Seene's styling
     return new ImageResponse(
@@ -41,7 +37,7 @@ export default async function handler(request) {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            background: `linear-gradient(135deg, ${seene.gradient_start} 0%, ${seene.gradient_end} 100%)`,
+            background: `linear-gradient(135deg, ${seene.gradient_start || '#ffffff'} 0%, ${seene.gradient_end || '#f3f4f6'} 100%)`,
             padding: '80px',
           }}
         >
@@ -49,7 +45,7 @@ export default async function handler(request) {
             style={{
               fontSize: 60,
               fontWeight: 300,
-              color: seene.text_color,
+              color: seene.text_color || '#111827',
               textAlign: 'center',
               lineHeight: 1.4,
               maxWidth: '90%',
@@ -57,7 +53,7 @@ export default async function handler(request) {
               wordBreak: 'break-word',
             }}
           >
-            {seene.text.length > 200 ? seene.text.substring(0, 200) + '...' : seene.text}
+            {displayText}
           </div>
           <div
             style={{
@@ -65,7 +61,7 @@ export default async function handler(request) {
               bottom: 40,
               right: 40,
               fontSize: 24,
-              color: seene.text_color,
+              color: seene.text_color || '#111827',
               opacity: 0.6,
             }}
           >
@@ -80,6 +76,6 @@ export default async function handler(request) {
     )
   } catch (error) {
     console.error('Error generating OG image:', error)
-    return new Response('Error generating image', { status: 500 })
+    return new Response(`Error: ${error.message}`, { status: 500 })
   }
 }
