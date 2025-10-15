@@ -35,7 +35,8 @@ export default async function handler(req, res) {
     }
 
     const url = `https://seene.link/${id}`
-    const ogImageUrl = `https://seene.link/api/og/${id}?id=${id}`
+    // For now, use a placeholder image - we'll implement dynamic OG images later
+    const ogImageUrl = `https://seene.link/og-placeholder.png`
     const title = seene.text.substring(0, 60) + (seene.text.length > 60 ? '...' : '')
     const description = seene.text.substring(0, 160) + (seene.text.length > 160 ? '...' : '')
     
