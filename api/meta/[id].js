@@ -10,8 +10,8 @@ export default async function handler(req, res) {
     }
 
     // Get Seene data from Supabase using REST API
-    const supabaseUrl = process.env.VITE_SUPABASE_URL
-    const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY
+    const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL
+    const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY
     
     const response = await fetch(
       `${supabaseUrl}/rest/v1/seenes?id=eq.${id}&select=*`,

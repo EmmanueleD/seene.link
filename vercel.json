@@ -3,8 +3,15 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/api/og/:id",
-      "destination": "/api/og/[id]"
+      "source": "/:id([A-Za-z0-9_-]{6,32})",
+      "destination": "/api/meta/:id",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(bot|crawler|spider|facebookexternalhit|twitterbot|whatsapp|linkedinbot|slackbot|discordbot|telegrambot).*"
+        }
+      ]
     },
     {
       "source": "/:path((?!api).*)",
