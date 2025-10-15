@@ -1,49 +1,52 @@
-import { readFileSync } from 'fs'
-import { join } from 'path'
+import { readFileSync } from "fs";
+import { join } from "path";
 
 export default async function handler(req, res) {
   try {
-    const { id } = req.query
+    const { id } = req.query;
 
     if (!id) {
-      return res.status(400).send('Missing ID')
+      return res.status(400).send("Missing ID");
     }
 
     // Get Seene data from Supabase using REST API
-    const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL
-    const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY
-    
+    const supabaseUrl =
+      process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
+    const supabaseKey =
+      process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+
     const response = await fetch(
       `${supabaseUrl}/rest/v1/seenes?id=eq.${id}&select=*`,
       {
         headers: {
-          'apikey': supabaseKey,
-          'Authorization': `Bearer ${supabaseKey}`,
-        },
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`
+        }
       }
-    )
+    );
 
     if (!response.ok) {
-      return res.status(500).send('Error fetching Seene')
+      return res.status(500).send("Error fetching Seene");
     }
 
-    const data = await response.json()
-    const seene = data[0]
+    const data = await response.json();
+    const seene = data[0];
 
     if (!seene) {
-      return res.status(404).send('Seene not found')
+      return res.status(404).send("Seene not found");
     }
 
-    const url = `https://seene.link/${id}`
-    // For now, use a placeholder image - we'll implement dynamic OG images later
-    const ogImageUrl = `https://seene.link/og-placeholder.png`
-    const title = seene.text.substring(0, 60) + (seene.text.length > 60 ? '...' : '')
-    const description = seene.text.substring(0, 160) + (seene.text.length > 160 ? '...' : '')
-    
+    const url = `https://seene.link/${id}`;
+    const ogImageUrl = `https://seene.link/api/og?id=${id}`;
+    const title =
+      seene.text.substring(0, 60) + (seene.text.length > 60 ? "..." : "");
+    const description =
+      seene.text.substring(0, 160) + (seene.text.length > 160 ? "..." : "");
+
     // Read the index.html from dist folder
-    const indexPath = join(process.cwd(), 'dist', 'index.html')
-    let html = readFileSync(indexPath, 'utf-8')
-    
+    const indexPath = join(process.cwd(), "dist", "index.html");
+    let html = readFileSync(indexPath, "utf-8");
+
     // Inject meta tags into the HTML
     const metaTags = `
   <title>${title}</title>
@@ -61,15 +64,15 @@ export default async function handler(req, res) {
   <meta name="twitter:title" content="${title}">
   <meta name="twitter:description" content="${description}">
   <meta name="twitter:image" content="${ogImageUrl}">
-`
-    
-    // Insert meta tags before </head>
-    html = html.replace('</head>', `${metaTags}</head>`)
+`;
 
-    res.setHeader('Content-Type', 'text/html')
-    res.status(200).send(html)
+    // Insert meta tags before </head>
+    html = html.replace("</head>", `${metaTags}</head>`);
+
+    res.setHeader("Content-Type", "text/html");
+    res.status(200).send(html);
   } catch (error) {
-    console.error('Error generating meta page:', error)
-    res.status(500).send('Error generating page')
+    console.error("Error generating meta page:", error);
+    res.status(500).send("Error generating page");
   }
 }
